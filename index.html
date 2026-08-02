@@ -59,6 +59,7 @@
     padding: 36px 40px;
     position: relative;
     overflow: hidden;
+    min-height: 180px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 30px rgba(139, 92, 246, 0.15);
     margin-bottom: 28px;
     display: flex;
@@ -81,8 +82,8 @@
     position: absolute;
     right: 20px;
     top: 50%;
-    width: 200px;
-    height: 200px;
+    width: 160px;
+    height: 160px;
     background-image: url('logo-hut32.png'); /* Sesuaikan nama file di GitHub */
     background-size: contain;
     background-repeat: no-repeat;
@@ -90,6 +91,7 @@
     opacity: 0.35;
     pointer-events: none;
     animation: floatLogo 4s ease-in-out infinite;
+    z-index: 1;
   }
 
   @keyframes floatLogo {
@@ -339,7 +341,7 @@
   <!-- Search Input -->
   <div class="search-container">
     <span class="search-icon">🔍</span>
-    <input id="cari" class="search-input" placeholder="CARI KUPON, NAMA KARYAWAN, DEVISI, DLL...">
+    <input id="cari" class="search-input" placeholder="CARI KUPON, NAMA KARYAWAN, DIVISI, DLL...">
   </div>
 
   <!-- Data Table -->
@@ -351,6 +353,11 @@
 <script>
 const CSV="https://docs.google.com/spreadsheets/d/e/2PACX-1vRiZU8-43r2k7yPouq8insGUTXURLnWxC8nOYYNJGLoCkGYLF3YXxrsgR93kRi7Jrnyo-wdenWm91vc/pub?gid=0&single=true&output=csv";
 let master=[], sortAsc=true;
+
+function formatJam(d){
+  const p = n => String(n).padStart(2,"0");
+  return `${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+}
 
 function render(data){
   if(!data.length){
@@ -376,7 +383,7 @@ function render(data){
   h += "</tbody>";
   tbl.innerHTML = h;
   total.textContent = data.length.toLocaleString("id-ID");
-  upd.textContent = new Date().toLocaleTimeString("id-ID", {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + " WIB";
+  upd.textContent = formatJam(new Date()) + " WIB";
 }
 
 function sortCol(c){
@@ -419,7 +426,7 @@ function updateClock(){
   const now = new Date();
   const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   tanggal.textContent = now.toLocaleDateString("id-ID", optionsDate);
-  jam.textContent = now.toLocaleTimeString("id-ID", {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + " WIB";
+  jam.textContent = formatJam(now) + " WIB";
 }
 
 cari.oninput = () => render(master.filter(x => Object.values(x).join(" ").toLowerCase().includes(cari.value.toLowerCase())));
