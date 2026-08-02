@@ -8,26 +8,27 @@
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <style>
   :root {
-    --bg-primary: #0b132b;
-    --bg-card: #1c2541;
+    --bg-primary: #0a0518;
+    --bg-card: #150d2a;
+    --accent-purple: #8b5cf6;
     --accent-gold: #f59e0b;
     --accent-gold-light: #fbbf24;
     --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --border-color: rgba(255, 255, 255, 0.1);
+    --text-muted: #a78bfa;
+    --border-color: rgba(139, 92, 246, 0.2);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   
   body {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    background-color: #070d1e;
+    background-color: var(--bg-primary);
     color: var(--text-main);
     min-height: 100vh;
     padding: 24px;
     background-image: 
-      radial-gradient(circle at 10% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
-      radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 40%);
+      radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
+      radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.12) 0%, transparent 45%);
   }
 
   .container {
@@ -37,13 +38,13 @@
 
   /* Banner Header Modern */
   .hero-banner {
-    background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #0d1b2a 100%);
-    border: 1px solid rgba(245, 158, 11, 0.3);
+    background: linear-gradient(135deg, #13092b 0%, #251249 50%, #13092b 100%);
+    border: 1px solid rgba(245, 158, 11, 0.35);
     border-radius: 20px;
     padding: 32px 40px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     margin-bottom: 28px;
     display: flex;
     justify-content: space-between;
@@ -52,26 +53,26 @@
     gap: 20px;
   }
 
-  /* Ornamen Hadiah di Background (Samping Tepi) */
+  /* Watermark Gambar HUT 32 di Background Header */
   .hero-banner::after {
-    content: "🎁";
-    font-size: 160px;
+    content: "";
     position: absolute;
-    right: -20px;
-    top: -30px;
-    opacity: 0.12;
-    transform: rotate(15deg);
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 220px;
+    height: 220px;
+    /* Ganti path file di bawah ini jika file lokal */
+    background-image: url('NCT HUT 32 (2).png'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.25;
     pointer-events: none;
   }
 
-  .hero-banner::before {
-    content: "✨";
-    font-size: 80px;
-    position: absolute;
-    left: 20%;
-    bottom: -20px;
-    opacity: 0.1;
-    pointer-events: none;
+  .hero-title {
+    z-index: 1;
   }
 
   .hero-title h1 {
@@ -88,30 +89,35 @@
   .hero-title p {
     color: var(--text-muted);
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
-  /* Pemisah Jam & Status */
+  /* Pemisah Jam & Tanggal */
   .time-badge {
-    background: rgba(255, 255, 255, 0.05);
+    z-index: 1;
+    background: rgba(21, 13, 42, 0.7);
     backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
-    padding: 12px 24px;
-    border-radius: 12px;
+    padding: 12px 20px;
+    border-radius: 14px;
     text-align: right;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
   }
 
-  .time-badge .label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
+  .time-badge .date {
+    font-size: 0.8rem;
+    font-weight: 600;
     color: var(--accent-gold);
-    letter-spacing: 1px;
-    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
   }
 
   .time-badge .clock {
     font-size: 1.4rem;
-    font-weight: 700;
+    font-weight: 800;
     color: #fff;
     font-variant-numeric: tabular-nums;
   }
@@ -130,7 +136,7 @@
     border-radius: 16px;
     padding: 20px 24px;
     position: relative;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     transition: transform 0.2s ease, border-color 0.2s ease;
   }
 
@@ -142,14 +148,14 @@
   .stat-card .title {
     color: var(--text-muted);
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 8px;
     text-transform: uppercase;
   }
 
   .stat-card .value {
     font-size: 1.8rem;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--accent-gold-light);
   }
 
@@ -168,14 +174,20 @@
     color: #fff;
     font-size: 1rem;
     font-family: inherit;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     transition: all 0.3s ease;
+    text-transform: uppercase;
+  }
+
+  .search-input::placeholder {
+    text-transform: none;
+    color: #6b7280;
   }
 
   .search-input:focus {
     outline: none;
     border-color: var(--accent-gold);
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
   }
 
   .search-icon {
@@ -193,7 +205,7 @@
     border-radius: 16px;
     border: 1px solid var(--border-color);
     overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
   }
 
   table {
@@ -203,11 +215,11 @@
   }
 
   th {
-    background: #141c33;
+    background: #1c0e3d;
     color: var(--accent-gold);
-    padding: 16px 20px;
+    padding: 18px 20px;
     font-size: 0.85rem;
-    font-weight: 700;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     cursor: pointer;
@@ -217,18 +229,21 @@
   }
 
   th:hover {
-    background: #1e2942;
+    background: #2a155c;
   }
 
+  /* Semua isi data dibuat UPPERCASE secara menyeluruh */
   td {
     padding: 16px 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     color: var(--text-main);
     font-size: 0.95rem;
+    text-transform: uppercase;
+    font-weight: 500;
   }
 
   tr:hover td {
-    background-color: rgba(255, 255, 255, 0.02);
+    background-color: rgba(139, 92, 246, 0.08);
   }
 
   tr:last-child td {
@@ -244,6 +259,7 @@
   @media (max-width: 768px) {
     body { padding: 12px; }
     .hero-banner { padding: 20px; }
+    .hero-banner::after { width: 140px; height: 140px; opacity: 0.15; }
     .hero-title h1 { font-size: 1.3rem; }
     .table-wrapper { overflow-x: auto; }
   }
@@ -259,17 +275,17 @@
       <p>Sistem Pemantauan Data Undian & Doorprize Realtime</p>
     </div>
     
-    <!-- Pemisah Jam -->
+    <!-- Pemisah Jam & Tanggal -->
     <div class="time-badge">
-      <div class="label">Waktu Sistem</div>
-      <div class="clock" id="jam">--:--:--</div>
+      <div class="date" id="tanggal">-- ------ ----</div>
+      <div class="clock" id="jam">--:--:-- WIB</div>
     </div>
   </div>
 
   <!-- Cards Stat -->
   <div class="stats-grid">
     <div class="stat-card">
-      <div class="title">Total Peserta / Data</div>
+      <div class="title">Total Hadiah</div>
       <div class="value" id="total">0</div>
     </div>
     <div class="stat-card">
@@ -281,7 +297,7 @@
   <!-- Search Input -->
   <div class="search-container">
     <span class="search-icon">🔍</span>
-    <input id="cari" class="search-input" placeholder="Cari data peserta, kupon, atau kata kunci...">
+    <input id="cari" class="search-input" placeholder="CARI KUPON, NAMA KARYAWAN, DIVISI, DLL...">
   </div>
 
   <!-- Data Table -->
@@ -296,17 +312,25 @@ let master=[], sortAsc=true;
 
 function render(data){
   if(!data.length){
-    tbl.innerHTML = "<tr><td class='empty-state'>Data tidak ditemukan</td></tr>";
+    tbl.innerHTML = "<tr><td class='empty-state'>DATA TIDAK DITEMUKAN</td></tr>";
     return;
   }
+
+  const keys = Object.keys(data[0]);
   let h = "<thead><tr>";
-  Object.keys(data[0]).forEach(k => h += `<th onclick="sortCol('${k}')">${k} ↕</th>`);
+  keys.forEach((k) => {
+    h += `<th onclick="sortCol('${k}')">${k} ↕</th>`;
+  });
   h += "</tr></thead><tbody>";
+
   data.forEach(r => {
     h += "<tr>";
-    Object.values(r).forEach(v => h += `<td>${v??""}</td>`);
+    Object.values(r).forEach((v) => {
+      h += `<td>${v??""}</td>`;
+    });
     h += "</tr>";
   });
+  
   h += "</tbody>";
   tbl.innerHTML = h;
   total.textContent = data.length.toLocaleString("id-ID");
@@ -342,11 +366,28 @@ function load(){
   });
 }
 
+function updateClock(){
+  const now = new Date();
+  
+  // Format Tanggal Lengkap
+  const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  tanggal.textContent = now.toLocaleDateString("id-ID", optionsDate);
+  
+  // Format Jam
+  jam.textContent = now.toLocaleTimeString("id-ID", {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + " WIB";
+}
+
 cari.oninput = () => render(master.filter(x => Object.values(x).join(" ").toLowerCase().includes(cari.value.toLowerCase())));
 
+// Inisialisasi
 load();
-setInterval(load, 10000);
-setInterval(() => jam.textContent = new Date().toLocaleTimeString("id-ID"), 1000);
+updateClock();
+
+// Auto refresh data setiap 10 detik (10000 ms)
+setInterval(load, 10000); 
+
+// Update jam & tanggal setiap 1 detik
+setInterval(updateClock, 1000);
 </script>
 
 </body>
